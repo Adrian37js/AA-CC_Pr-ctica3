@@ -1,0 +1,79 @@
+DROP TABLE Camion;
+DROP TABLE Turismo;
+DROP TABLE Empleados;
+DROP TABLE Extras;
+DROP TABLE Vehiculo;
+
+CREATE TABLE Empleados
+    (
+        usuario SMALLINT PRIMARY KEY,
+        password VARCHAR2(20) NOT NULL
+    );
+
+CREATE TABLE Extras
+    (
+        id SMALLINT PRIMARY KEY,
+        descripcion VARCHAR2(80) NOT NULL
+    );
+    
+CREATE TABLE Vehiculo
+    (
+        matricula VARCHAR2(10) PRIMARY KEY,
+        marca VARCHAR2(40) NOT NULL,
+        modelo VARCHAR2(40) NOT NULL,
+        color VARCHAR2(40) NOT NULL,
+        precio NUMBER(7,2) NOT NULL);
+    
+CREATE TABLE Turismo
+    (
+        matricula VARCHAR2(10) PRIMARY KEY,
+        num_puertas SMALLINT NOT NULL,
+        extra SMALLINT NOT NULL,
+        FOREIGN KEY (matricula) REFERENCES Vehiculo,
+        FOREIGN KEY (extra) REFERENCES Extras ON DELETE SET NULL
+    );
+    
+CREATE TABLE Camion
+    (
+        matricula VARCHAR2(10) PRIMARY KEY,
+        cap_carga SMALLINT NOT NULL,
+        FOREIGN KEY (matricula) REFERENCES Vehiculo
+    );
+    
+INSERT INTO Extras VALUES(1, 'Airbag');
+INSERT INTO Extras VALUES(2, 'Aire Acondicionado');
+INSERT INTO Extras VALUES(3, 'Pantalla táctil');
+INSERT INTO Extras VALUES(4, 'Conducción asistida');
+INSERT INTO Extras VALUES(5, 'Blindaje');
+INSERT INTO Extras VALUES(6, 'Asientos electricos');
+
+    
+INSERT INTO Vehiculo VALUES('123456X' , 'Nissan', 'modelo1', 'Rojo', 18000);
+INSERT INTO Vehiculo VALUES('654321Z' , 'Toyota', 'modelo2', 'Azul', 15000);
+INSERT INTO Vehiculo VALUES('132654P' , 'Mercedes Benz', 'modelo2', 'Negro', 7000);
+INSERT INTO Vehiculo VALUES('624537D' , 'Alfa Romeo', 'modelo3', 'Amarillo', 33000);
+INSERT INTO Vehiculo VALUES('987257M' , 'Audio', 'modelo4', 'Verde', 23000);
+INSERT INTO Vehiculo VALUES('463715F' , 'Mercedes', 'modelo5', 'Marron', 28000);
+
+INSERT INTO Vehiculo VALUES('122331G' , 'Camion', 'modelo6', 'Blanco', 35000);
+INSERT INTO Vehiculo VALUES('122332L' , 'Camion', 'modelo7', 'Rosa', 39000);
+INSERT INTO Vehiculo VALUES('122333H' , 'Camion', 'modelo8', 'Morado', 40000);
+INSERT INTO Vehiculo VALUES('122334I' , 'Camion', 'modelo9', 'Naranja', 45000);
+
+INSERT INTO Turismo VALUES('123456X' , 3, 2);
+INSERT INTO Turismo VALUES('654321Z' , 5, 1);
+INSERT INTO Turismo VALUES('132654P' , 3, 3);
+INSERT INTO Turismo VALUES('624537D' , 5, 4);
+INSERT INTO Turismo VALUES('987257M' , 3, 6);
+INSERT INTO Turismo VALUES('463715F' , 5, 5);
+
+INSERT INTO Camion VALUES('122331G' , 200);
+INSERT INTO Camion VALUES('122332L' , 500);
+INSERT INTO Camion VALUES('122333H' , 400);
+INSERT INTO Camion VALUES('122334I' , 600);
+
+
+INSERT INTO Empleados VALUES(1234, 'q1111');
+INSERT INTO Empleados VALUES(1122, 'w1111');
+INSERT INTO Empleados VALUES(2211, 'a1111');
+
