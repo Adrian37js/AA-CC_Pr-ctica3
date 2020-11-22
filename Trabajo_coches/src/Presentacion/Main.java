@@ -32,8 +32,7 @@ class Main {
 		registro = login(usuario, contraseña);												//comprobamos si está en la bbdd
 		}while(registro == false);
 	
-		//Vehiculo tu_e = new Turismo();
-		//ArrayList<Vehiculo> t_e = tu_e.leerTodos();	
+
 
 		System.out.println("____Bienvenido____");
 		System.out.println("-------------------------------");
@@ -494,7 +493,8 @@ class Main {
 								System.out.println("No disponemos de ese extra");
 
 							} else {
-								//((Turismo) modTurismo).setExtras(modExtra);
+								Turismo_extras turismo_extras=new Turismo_extras(matricula, modExtra);
+			                    turismo_extras.insertar();
 							}
 						} catch (InputMismatchException e) {
 							System.err.println("Introduzca solo números");							
@@ -689,6 +689,8 @@ class Main {
 
 		System.out.println("Indica el Id");
 		int id = sc.nextInt();
+		
+		
 		Extra delExtras = new Extra();
 		delExtras = delExtras.leerExtras(id);
 
@@ -713,6 +715,7 @@ class Main {
 		Empleado empleado1 = new Empleado();
 
 		return empleado1.leerEmpleados(usuario, contraseña);
+		
 
 	}
 	

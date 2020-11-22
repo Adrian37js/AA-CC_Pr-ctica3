@@ -74,10 +74,16 @@ public class EmpleadoDao {
 			co= Conexion.conectar();
 			stm=co.createStatement();
 			rs=stm.executeQuery(sql);
+			
+			if(rs.getString(2)==(null)) {
+			seguir = false;
+			}else {
+				seguir = true;
+			}
 			stm.close();
 			rs.close();
 			co.close();
-			seguir = true;
+
 		} catch (SQLException e) {
 			System.err.println("Error: EmpleadoDao");
 			e.printStackTrace();

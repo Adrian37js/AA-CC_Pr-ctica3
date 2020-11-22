@@ -135,29 +135,17 @@ public class Turismo_extrasDao {
 			Statement stm= null;
 			
 			boolean eliminar=false;
-			String sql="UPDATE Turismo SET extra=0";
-			String sql2="DELETE FROM Extras WHERE id <> 1";
+			
+			String sql="DELETE FROM Turismo_extra WHERE Extra <> 0";
 			try {
 				connect=Conexion.conectar();
 				stm=connect.createStatement();
 				stm.execute(sql);
-				stm.execute(sql2);
 				eliminar=true;
 				stm.close();
 				connect.close();
 			} catch (SQLException e) {
 				System.err.println("Error: Turismo_extras");
-				e.printStackTrace();	
-			}		
-			sql="DELETE FROM Turismo_extras WHERE id<>1";	
-			try {
-				connect=Conexion.conectar();
-				stm=connect.createStatement();
-				stm.execute(sql);	
-				eliminar=true;	
-				
-			} catch (SQLException e) {	
-				System.out.println("Error: Turismo_extras");
 				e.printStackTrace();	
 			}		
 			return eliminar;			
@@ -172,7 +160,7 @@ public class Turismo_extrasDao {
 			boolean eliminar=false;
 			
 			String sql="UPDATE Turismo SET extra=0 WHERE extra=" + extra.getid()+"";
-			String sql2="DELETE FROM Extras WHERE id = "+extra.getid()+ "";
+			String sql2="DELETE FROM Turismo_extras WHERE id = "+extra.getid()+ "";
 			try {
 				connect=Conexion.conectar();	
 				stm=connect.createStatement();		

@@ -120,7 +120,7 @@ public class ExtraDao {
 		
 		boolean eliminar=false;
 		boolean actualizar=false;
-		String sql="UPDATE Turismo SET extra=0";
+		String sql="DELETE FROM Extras WHERE id <> 0";	
 		try {
 			connect=Conexion.conectar();
 			stm=connect.createStatement();
@@ -131,18 +131,7 @@ public class ExtraDao {
 		} catch (SQLException e) {
 			System.err.println("Error: ExtraDao");
 			e.printStackTrace();	
-		}		
-		sql="DELETE FROM Extras WHERE id <> 1";	
-		try {
-			connect=Conexion.conectar();
-			stm=connect.createStatement();
-			stm.execute(sql);	
-			eliminar=true;	
-			
-		} catch (SQLException e) {	
-			System.out.println("Error: ExtraDao");
-			e.printStackTrace();	
-		}		
+		}				
 		return eliminar;			
 	}
 	
@@ -153,7 +142,7 @@ public class ExtraDao {
 		boolean actualizar=false;
 		boolean eliminar=false;
 		
-		String sql="UPDATE Turismo SET extra=1 WHERE extra="+extra.getid()+"";
+		String sql="DELETE FROM Extras WHERE id= " +extra.getid()+"";
 		try {
 			connect=Conexion.conectar();	
 			stm=connect.createStatement();		
@@ -168,18 +157,7 @@ public class ExtraDao {
 			;
 			e.printStackTrace();
 		}	
-		sql="DELETE FROM Extras WHERE id="+extra.getid()+"";
-		try {
-			connect=Conexion.conectar();
-			stm=connect.createStatement();
-			stm.execute(sql);
-			
-			eliminar=true;
-		} catch (SQLException e) {
-			
-			System.err.println("Error: ExtraDao");
-			e.printStackTrace();
-		}		
+	
 		return eliminar;
 	}
 
