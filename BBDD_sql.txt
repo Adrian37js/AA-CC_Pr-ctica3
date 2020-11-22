@@ -1,8 +1,10 @@
+DROP TABLE Turismo_extras;
 DROP TABLE Camion;
 DROP TABLE Turismo;
+DROP TABLE Vehiculo;
 DROP TABLE Empleados;
 DROP TABLE Extras;
-DROP TABLE Vehiculo;
+
 
 CREATE TABLE Empleados
     (
@@ -29,16 +31,25 @@ CREATE TABLE Turismo
         matricula VARCHAR2(10) PRIMARY KEY,
         num_puertas SMALLINT NOT NULL,
         extra SMALLINT NOT NULL,
-        FOREIGN KEY (matricula) REFERENCES Vehiculo,
-        FOREIGN KEY (extra) REFERENCES Extras ON DELETE SET NULL
-    );
+        FOREIGN KEY (matricula) REFERENCES Vehiculo    );
     
+CREATE TABLE Turismo_extras (
+        
+        Turismo VARCHAR2(10) not null,
+        Extra SMALLINT not null,
+        FOREIGN KEY(Turismo) references Turismo(matricula) ON DELETE CASCADE,
+        FOREIGN KEY(Extra) references Extras(id)  ON DELETE CASCADE ,
+        PRIMARY KEY(Turismo,Extra)
+);
+
 CREATE TABLE Camion
     (
         matricula VARCHAR2(10) PRIMARY KEY,
         cap_carga SMALLINT NOT NULL,
         FOREIGN KEY (matricula) REFERENCES Vehiculo
     );
+    
+
     
 INSERT INTO Extras VALUES(1, 'Airbag');
 INSERT INTO Extras VALUES(2, 'Aire Acondicionado');
@@ -71,6 +82,18 @@ INSERT INTO Camion VALUES('122331G' , 200);
 INSERT INTO Camion VALUES('122332L' , 500);
 INSERT INTO Camion VALUES('122333H' , 400);
 INSERT INTO Camion VALUES('122334I' , 600);
+
+INSERT INTO Turismo_extras VALUES('123456X' , 3);
+INSERT INTO Turismo_extras VALUES('654321Z' , 4);
+INSERT INTO Turismo_extras VALUES('132654P' , 5);
+INSERT INTO Turismo_extras VALUES('123456X' , 2);
+INSERT INTO Turismo_extras VALUES('123456X' , 1);
+INSERT INTO Turismo_extras VALUES('987257M' , 6);
+INSERT INTO Turismo_extras VALUES('624537D' , 1);
+INSERT INTO Turismo_extras VALUES('624537D' , 6);
+INSERT INTO Turismo_extras VALUES('987257M' , 1);
+INSERT INTO Turismo_extras VALUES('463715F' , 2);
+INSERT INTO Turismo_extras VALUES('463715F' , 1);
 
 
 INSERT INTO Empleados VALUES(1234, 'q1111');
