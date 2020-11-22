@@ -24,7 +24,7 @@ public class TurismoDao extends VehiculoDao {
 
 		String sql = "INSERT INTO Vehiculo values ('" + turismo.getMatricula() + "','" + turismo.getModelo() + "','"
 				+ turismo.getMarca() + "','" + turismo.getColor()+"'," + turismo.getPrecio()+")";
-		String sql2 = "INSERT INTO Turismo values ('" + turismo.getMatricula() + "'," + ((Turismo) turismo).getNum_puertas()+","+ ((Turismo) turismo).getExtras().getid() + ")";
+		String sql2 = "INSERT INTO Turismo values ('" + turismo.getMatricula() + "'," + ((Turismo) turismo).getNum_puertas()+ ")";
 
 		try {
 			con = Conexion.conectar();
@@ -54,25 +54,21 @@ public class TurismoDao extends VehiculoDao {
 		String sql = "SELECT * FROM Turismo ORDER BY matricula";
 
 		ArrayList<Vehiculo> listaVehiculo = new ArrayList<Vehiculo>();
-		Extra extra = new Extra();
-		ArrayList<Integer> auxExtra=new ArrayList<Integer>();
+		
+		
 		try {
 			co = Conexion.conectar();
 			stm = co.createStatement();
 			rs = stm.executeQuery(sql);
+			
 			while (rs.next()) {
-				auxExtra.add(rs.getInt(3));	
-				listaVehiculo.add(new Turismo(rs.getString(1), "", "","", 0, rs.getInt(2), extra));
+				
+				listaVehiculo.add(new Turismo(rs.getString(1), "", "","", 0, rs.getInt(2)));
 
 				}
 			stm.close();
 			rs.close();
 			co.close();
-			for (int i=0;i<auxExtra.size();i++) {
-				extra= extra.leerExtras(auxExtra.get(i));
-				((Turismo)listaVehiculo.get(i)).setExtras(extra);
-
-			}
 
 			for (int i = 0; i < listaVehiculo.size(); i++) {
 				co = Conexion.conectar();
@@ -114,17 +110,14 @@ public class TurismoDao extends VehiculoDao {
 			stm = co.createStatement();
 			rs = stm.executeQuery(sql);
 			while (rs.next()) {
-				auxExtra=rs.getInt(2);
 			encontrado=true;
-				leerVehiculo = new Turismo(rs.getString(1), "", "","", 0, rs.getInt(2), extra);
+			
+				leerVehiculo = new Turismo(rs.getString(1), "", "","", 0, rs.getInt(2));
 			}
 			stm.close();
 			rs.close();
 			co.close();
-			if(encontrado) {
-			extra=extra.leerExtras(auxExtra);			
-			((Turismo)leerVehiculo).setExtras(extra);
-			}
+
 			if (leerVehiculo != null) {
 				co = Conexion.conectar();
 				stm = co.createStatement();
@@ -160,7 +153,7 @@ public class TurismoDao extends VehiculoDao {
 				+turismo.getPrecio()+" WHERE matricula='"+turismo.getMatricula()+"'";	
 		
 		String sql2="UPDATE Turismo SET matricula='"+turismo.getMatricula()+"', extra="
-				+((Turismo)turismo).getExtras().getid()+" WHERE matricula='"+turismo.getMatricula()+"'";
+				+" WHERE matricula='"+turismo.getMatricula()+"'";
 		try {
 			connect=Conexion.conectar();
 			stm=connect.createStatement();
@@ -177,7 +170,7 @@ public class TurismoDao extends VehiculoDao {
 		String sql="INSERT INTO Vehiculo values ('"+turismo.getMatricula()+"','"+turismo.getMarca()+"','"+
 		turismo.getModelo()+"',"+turismo.getColor()+"',"+turismo.getPrecio()+")";
 			
-		String sql2="INSERT INTO Turismo values ('"+turismo.getMatricula()+"',"+((Turismo)turismo).getExtras().getid()+")";
+		String sql2="INSERT INTO Turismo values ('"+turismo.getMatricula() + "')";
 		
 		String sql3="DELETE FROM Turismo WHERE matricula='"+matricula+"'";
 		
@@ -224,8 +217,7 @@ public class TurismoDao extends VehiculoDao {
 		return eliminar;
 	}
 
-
-
+	
 	public boolean eliminarTodo() throws ClassNotFoundException {
 		Connection connect = null;
 		Statement stm = null;

@@ -6,14 +6,11 @@ import Persistencia.TurismoDao;
 
 public class Turismo extends Vehiculo {
 	private int num_puertas;
-	private Extra extra;
 	private TurismoDao turismodao;
 
-	public Turismo(String matricula, String marca, String modelo, String color, double precio, int num_puertas,
-			Extra extra) {
+	public Turismo(String matricula, String marca, String modelo, String color, double precio, int num_puertas) {
 		super(matricula, marca, modelo, color, precio);
 		this.num_puertas = num_puertas;
-		this.extra = extra;
 		this.turismodao= new TurismoDao();
 	}
 
@@ -30,19 +27,11 @@ public class Turismo extends Vehiculo {
 		this.num_puertas = num_puertas;
 	}
 
-	public Extra getExtras() {
-		return extra;
-	}
-
-	public void setExtras(Extra extra) {
-		this.extra = extra;
-	}
 
 	@Override
 	public String toString() {
 		return "Vehiculo [MATRICULA= " + matricula + ", MARCA= " + marca + ", MODELO= " + modelo + ", COLOR= " + color
-				+ ", PRECIO= " + precio + ", PUERTAS= " + num_puertas + ", EXTRA= "
-				+ extra.getid() + ", EXTRA nombre= " + extra.getDescripcion() + "]";
+				+ ", PRECIO= " + precio + ", PUERTAS= " + num_puertas;
 
 	}
 

@@ -40,7 +40,7 @@ public class Extra {
 
 	@Override
 	public String toString() {
-		return "Extras [id=" + id + ", descripcion=" + descripcion + "]";
+		return "Extra [id=" + id + ", descripcion=" + descripcion + "]";
 	}
 	
 	public void insertar() throws ClassNotFoundException {

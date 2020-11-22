@@ -32,6 +32,8 @@ class Main {
 		registro = login(usuario, contraseña);												//comprobamos si está en la bbdd
 		}while(registro == false);
 	
+		//Vehiculo tu_e = new Turismo();
+		//ArrayList<Vehiculo> t_e = tu_e.leerTodos();	
 
 		System.out.println("____Bienvenido____");
 		System.out.println("-------------------------------");
@@ -121,14 +123,38 @@ class Main {
 	//Mostramos todos
 	public static void mostrarTodos() throws ClassNotFoundException {							//Mostramos todos los vehiculos
 		boolean NoVehiculos = true;
+		
 		Vehiculo Vehiculo1 = new Turismo();
-		ArrayList<Vehiculo> vehiculos = Vehiculo1.leerTodos();									//Lo guardamos en Arraylist
-		for (int i = 0; i < vehiculos.size(); i++) {											//Comprobamos los Turismos
-			System.out.println(vehiculos.get(i).toString());
-			NoVehiculos = false;
+		ArrayList<Vehiculo> vehiculos = Vehiculo1.leerTodos();	
+		
+		Turismo_extras t_e = new Turismo_extras();
+		ArrayList<Turismo_extras> t_es = t_e.leerTodos();	
+		
+		//Lo guardamos en Arraylist
+		for (int i = 0; i < vehiculos.size(); i++) {			
+			//Comprobamos los Turismos
+			NoVehiculos = false;			
+			System.out.println(vehiculos.get(i).toString());//Comprobamos los Turismos
+
+			
+			for (int a = 0; a < t_es.size(); a++) {		
+			
+				if(vehiculos.get(i).getMatricula().equals(t_es.get(a).getMatricula()))
+				{
+					System.out.println(t_es.get(a).toString());
+					
+				}
+				
+			}
+			System.out.println("\n");
+
 		}
+		
+
+		
 		Vehiculo Vehiculo2 = new Camion();
 		vehiculos = Vehiculo2.leerTodos();
+		
 		for (int i = 0; i < vehiculos.size(); i++) {											//Comprobamos los camiones
 			System.out.println(vehiculos.get(i).toString());
 			NoVehiculos = false;
@@ -141,6 +167,7 @@ class Main {
 
 	//Buscmaos vehiculos
 	public static void buscarVehiculo() throws ClassNotFoundException {
+		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\nIndique la matricula:");
 		String matricula = sc.next();
@@ -150,11 +177,23 @@ class Main {
 																						//Leemos los camiones 
 		Vehiculo leerCamion = new Camion();
 		leerCamion = leerCamion.leerVehiculo(matricula);
+		
+		Turismo_extras t_e = new Turismo_extras();
+		ArrayList<Turismo_extras> t_es = t_e.leerTodos();	
+		
+
 																						//Lo buscamos
 		if (leerTurismo != null)
 		{
 			System.out.println(leerTurismo.toString());
-		} else if (leerCamion != null) 
+			for (int a = 0; a < t_es.size(); a++) {		
+				if(leerTurismo.getMatricula().equals(t_es.get(a).getMatricula()))
+				{
+					System.out.println(t_es.get(a).toString());
+				}
+			}		
+			
+			} else if (leerCamion != null) 
 		{
 			System.out.println(leerCamion.toString());
 		} else 
@@ -255,19 +294,38 @@ class Main {
 			do {
 				seguir = false;
 				try {
-					mostrarTodosLosExtras();
-					System.out.println("En los Turismos es obligatorio un extra.");
-					System.out.println("Introduzca un extra:");
-					
-					extra = sc.nextInt();
-					newExtra = new Extra();
-					newExtra = newExtra.leerExtras(extra);
-					
-					if (newExtra == null) {
-						seguir = true;
-						System.err.println("No disponemos de ese extra");
+					int id_extra = 0;
 
+					Vehiculo newVehiculo = new Turismo(matricula, marca, modelo, color, precio, num_puertas);
+					newVehiculo.insertar();
+					
+					mostrarTodosLosExtras();
+					System.out.println("En los Turismos es obligatorio un extra como mínimo.");
+					
+					System.out.println("Cuantos extras quieres añadir a tu Turismo?");
+					int cantidad = sc.nextInt();
+					for(int i = 0; i <cantidad; i++) {
+						
+						System.out.println("Introduzca un extra: ");
+						id_extra = sc.nextInt();
+						
+						newExtra = new Extra();
+						
+						newExtra = newExtra.leerExtras(id_extra);
+						
+						if (newExtra == null) {
+							seguir = true;
+							System.err.println("No disponemos de ese extra");
+
+						}
+						
+						Turismo_extras turismo_extras=new Turismo_extras(matricula, newExtra);
+	                    turismo_extras.insertar();
+						
 					}
+					
+
+					
 				} catch (InputMismatchException e) {
 					System.err.println("Introduzca solo números");
 					seguir = true;
@@ -275,12 +333,13 @@ class Main {
 					
 				}
 			} while (seguir);
-
-			Vehiculo newVehiculo = new Turismo(matricula, marca, modelo, color, precio, num_puertas, newExtra);
-			newVehiculo.insertar();
+			
+			//Vehiculo newVehiculo = new Turismo(matricula, marca, modelo, color, precio, num_puertas, newExtra);
+			//newVehiculo.insertar();
 
 		}
 		int capacidad_carga = 0;
+		
 		if (opcion == 2) {														//Camion
 
 			do {
@@ -435,7 +494,7 @@ class Main {
 								System.out.println("No disponemos de ese extra");
 
 							} else {
-								((Turismo) modTurismo).setExtras(modExtra);
+								//((Turismo) modTurismo).setExtras(modExtra);
 							}
 						} catch (InputMismatchException e) {
 							System.err.println("Introduzca solo números");							
@@ -549,6 +608,7 @@ class Main {
 			seguir = false;
 			System.out.println("Introduzca el id");
 			id = sc.nextInt();
+			
 			Extra existeExtra = new Extra();
 			existeExtra = existeExtra.leerExtras(id);
 
@@ -649,6 +709,7 @@ class Main {
 	
 	//Login
 	private static boolean  login(String usuario, String contraseña) throws ClassNotFoundException, SQLDataException {
+		
 		Empleado empleado1 = new Empleado();
 
 		return empleado1.leerEmpleados(usuario, contraseña);

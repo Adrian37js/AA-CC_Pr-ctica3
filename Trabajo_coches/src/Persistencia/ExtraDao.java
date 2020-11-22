@@ -132,7 +132,7 @@ public class ExtraDao {
 			System.err.println("Error: ExtraDao");
 			e.printStackTrace();	
 		}		
-		sql="DELETE FROM Extras WHERE id<>1";	
+		sql="DELETE FROM Extras WHERE id <> 1";	
 		try {
 			connect=Conexion.conectar();
 			stm=connect.createStatement();
